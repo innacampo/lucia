@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCIA: Bias-Aware AI Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fef3c7;
+            color: #433d32;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #d97706, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background: #f97316;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .btn-primary:hover {
+            background-color: #ea580c;
+            transform: translateY(-2px);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #f97316;
+            font-weight: bold;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-left: 0.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #f97316;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-amber-50 antialiased">
+
+<div class="container py-12">
+    <!-- Header Section -->
+    <header class="text-center mb-16">
+        <h1 class="text-5xl font-extrabold mb-4">
+            <span class="gradient-text">LUCIA: Bias-Aware AI Agent</span>
+        </h1>
+        <p class="text-xl text-amber-900 font-medium max-w-2xl mx-auto">
+            A demo of our Bias-Aware Symptom Triage and Narrative Analysis Agent.
+        </p>
+    </header>
+
+    <!-- Main Section: Agent Interface -->
+    <section class="mb-16">
+        <div class="card p-8">
+            <h2 class="text-3xl font-bold mb-4 text-orange-700">Patient Narrative</h2>
+            <textarea id="narrative-input" class="w-full h-40 p-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-orange-500 transition-colors duration-200" placeholder="Describe your symptoms in your own words...">Over the last few months, I've been experiencing significant joint pain, especially in my knees and hands, along with constant fatigue. I've also noticed unexpected weight gain and my hair seems to be thinning. When I brought this up to my doctor, she just told me it's normal aging and to lose weight and eat less. I feel dismissed and like something else is wrong. The brain fog has been so bad lately that I can't concentrate at work, and my anxiety levels are through the roof.</textarea>
+            <div class="mt-4 text-center">
+                <button id="analyze-btn" class="btn-primary">✨ Analyze Narrative</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section>
+        <div id="results-card" class="card hidden">
+            <h2 class="text-3xl font-bold mb-4 text-orange-700">Agent-Generated Report</h2>
+            <div id="results-content" class="space-y-4">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="text-center text-gray-400 text-sm mt-12">
+    <p>&copy; 2024. All rights reserved. The content and methodology within this document are protected intellectual property.</p>
+</footer>
+
+<script>
+    document.getElementById('analyze-btn').addEventListener('click', async () => {
+        const narrative = document.getElementById('narrative-input').value;
+        const resultsCard = document.getElementById('results-card');
+        const resultsContent = document.getElementById('results-content');
+        const analyzeBtn = document.getElementById('analyze-btn');
+
+        if (!narrative.trim()) {
+            resultsContent.innerHTML = '<p class="text-red-500">Please enter a narrative to analyze.</p>';
+            resultsCard.classList.remove('hidden');
+            return;
+        }
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.classList.add('loading');
+        analyzeBtn.innerHTML = 'Analyzing...';
+        resultsCard.classList.remove('hidden');
+        resultsContent.innerHTML = '';
+
+        try {
+            const userQuery = `Analyze the following patient narrative for potential symptom clusters and diagnostic bias, and generate a structured report.
+
+            Narrative: "${narrative}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: `Act as a bias-aware AI agent for women's health. Your persona is LUCIA (Language Understanding for Clinical Insight & Analysis). Analyze patient narratives to identify symptom clusters, flag potential instances of diagnostic bias, and provide a structured report for patient advocacy. Always present the output as a single JSON object with the following schema:
+                    {
+                        "symptomMapping": { "symptom_cluster_name": "list_of_translated_terms_or_phrases" },
+                        "biasAwareness": "A concise, single-paragraph analysis of any potential biases found in the narrative.",
+                        "structuredAdvocacy": [ "A list of actionable, question-based bullet points for the patient to use in a conversation with a clinician." ]
+                    }`}]
+                },
+                generationConfig: {
+                    responseMimeType: "application/json"
+                }
+            };
+            // Note: Replace "" with your actual API key.
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP error! Status: ${response.status}. Details: ${errorText}`);
+            }
+
+            const result = await response.json();
+
+            if (!result || !result.candidates || !result.candidates[0] || !result.candidates[0].content || !result.candidates[0].content.parts || !result.candidates[0].content.parts[0] || !result.candidates[0].content.parts[0].text) {
+                throw new Error("API response is empty or malformed.");
+            }
+
+            const jsonResponse = JSON.parse(result.candidates[0].content.parts[0].text);
+
+            let symptomMappingHtml = '';
+            for (const cluster in jsonResponse.symptomMapping) {
+                symptomMappingHtml += `<h4 class="font-semibold text-gray-800">${cluster}</h4>`;
+                symptomMappingHtml += `<ul class="list-disc list-inside mt-2 space-y-1 text-sm text-gray-700">`;
+                jsonResponse.symptomMapping[cluster].forEach(item => {
+                    symptomMappingHtml += `<li>${item}</li>`;
+                });
+                symptomMappingHtml += `</ul>`;
+            }
+
+            let advocacyHtml = '<ul class="list-disc list-inside mt-2 space-y-1 text-sm text-gray-700">';
+            jsonResponse.structuredAdvocacy.forEach(item => {
+                advocacyHtml += `<li>${item}</li>`;
+            });
+            advocacyHtml += '</ul>';
+
+            resultsContent.innerHTML = `
+                <div class="p-4 bg-gray-100 rounded-lg shadow">
+                    <h4 class="font-semibold text-gray-800">Symptom Mapping</h4>
+                    <div class="mt-2">${symptomMappingHtml}</div>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg shadow">
+                    <h4 class="font-semibold text-gray-800">Bias Awareness</h4>
+                    <p class="text-sm text-gray-700 mt-2">${jsonResponse.biasAwareness}</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg shadow">
+                    <h4 class="font-semibold text-gray-800">Structured Advocacy</h4>
+                    ${advocacyHtml}
+                </div>
+            `;
+
+        } catch (error) {
+            resultsContent.innerHTML = `<p class="text-red-500">API call failed: ${error.message}. Please try again.</p>`;
+            console.error('API call failed:', error);
+        } finally {
+            analyzeBtn.disabled = false;
+            analyzeBtn.classList.remove('loading');
+            analyzeBtn.innerHTML = '✨ Analyze Narrative';
+        }
+    });
+</script>
+
+</body>
+</html>
