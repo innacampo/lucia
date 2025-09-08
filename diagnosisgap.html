@@ -1,12 +1,10 @@
-<!-- This single-page application (SPA) infographic presents data on women's mental health misdiagnosis. It uses Chart.js for visualizations and Tailwind CSS for a responsive layout. All code is contained within this single file. No SVG graphics or Mermaid JS were used. The charts are optimized for clear understanding, using a distinct color palette while maintaining the overall warm, energetic theme. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Unseen Struggle: Women's Mental Health Diagnosis Gap</title>
+    <title>Dismissal, Delays, and Misdiagnosis in Women's Mental Health</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
@@ -33,16 +31,7 @@
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 320px;
-            max-height: 450px;
+            box-shadow: 0 15px 20px -3px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1);
         }
                 .btn-primary {
             background: #f97316;
@@ -59,263 +48,131 @@
         .btn-primary:active {
             transform: translateY(0);
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
     </style>
 </head>
-<body class="bg-amber-50 antialiased">
+<body class="p-4">
 
-<div class="container py-12">
-    <!-- Header Section -->
-    <header class="text-center mb-16">
-        <h1 class="text-5xl font-extrabold mb-4">
-            <span class="gradient-text">The Unseen Struggle</span>
-        </h1>
-        <p class="text-xl text-amber-900 font-medium max-w-2xl mx-auto">
-            Symptom Dismissal and Diagnostic Delays in Women's Mental Health
-        </p>
+<div class="container">
+    <header class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold gradient-text">Women's Mental Health Disparities</h1>
+        <p class="text-xl text-gray-700 mt-4">A Look into Symptom Dismissal, Diagnostic Delays, and Chronic Misdiagnoses</p>
     </header>
 
-    <!-- Problem Statement Section -->
-    <section class="mb-16">
-        <div class="card p-8 text-center">
-            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-                Women often face a significantly longer and more arduous journey to receive an accurate mental health diagnosis compared to men. This infographic explores the data behind the delays, the common misdiagnoses, and the factors contributing to this critical healthcare gap.
-            </p>
-        </div>
-    </section>
-
-    <!-- Key Statistics Section -->
-    <section class="mb-16">
-        <div class="card p-8">
-            <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">The Human Cost of Diagnostic Delays</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="p-6 rounded-lg bg-yellow-50/50">
-                    <p class="text-5xl font-extrabold text-orange-800">50%</p>
-                    <p class="text-md font-bold text-gray-700">Higher Misdiagnosis Rate</p>
-                    <p class="text-sm text-gray-600 mt-1">Women with ADHD are 50% more likely than men to be initially misdiagnosed with anxiety or depression.</p>
-                </div>
-                <div class="p-6 rounded-lg bg-yellow-50/50">
-                    <p class="text-5xl font-extrabold text-orange-800">9 Years</p>
-                    <p class="text-md font-bold text-gray-700">Average Diagnostic Delay</p>
-                    <p class="text-sm text-gray-600 mt-1">The average diagnostic delay for endometriosis, a condition with severe mental health impacts, is nearly a decade.</p>
-                </div>
-                <div class="p-6 rounded-lg bg-yellow-50/50">
-                    <p class="text-5xl font-extrabold text-orange-800">2x</p>
-                    <p class="text-md font-bold text-gray-700">More Likely</p>
-                    <p class="text-sm text-gray-600 mt-1">Women are twice as likely as men to be diagnosed with depression, even when presenting identical symptoms.</p>
-                </div>
+    <main class="space-y-12">
+        <!-- Introduction Section -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">The Overlooked Crisis</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    A significant body of peer-reviewed research reveals a pervasive issue in healthcare: the dismissal and misdiagnosis of women's health concerns. This crisis is fueled by historical biases, gender stereotypes, and a lack of gender-specific research, leading to prolonged suffering, worsened conditions, and a profound loss of trust in the healthcare system. One survey found that an overwhelming 93% of women reported feeling dismissed when seeking medical help, with more than half facing a delayed diagnosis as a result.
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Charts and Contributing Factors -->
-    <section class="mb-16">
-        <div class="card">
-            <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">Underlying Factors & Misdiagnoses</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- ADHD Chart -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-semibold mb-4 text-orange-800">The Long Road to an ADHD Diagnosis</h3>
-                    <p class="text-gray-700 mb-6">Attention-Deficit/Hyperactivity Disorder (ADHD) often presents differently in girls and women, leading to significant delays. While boys are often diagnosed in childhood due to hyperactive symptoms, women are frequently diagnosed in their 30s or 40s after years of struggling with inattentive symptoms.</p>
-                    <div class="chart-container">
-                        <canvas id="adhdDiagnosisAge"></canvas>
-                    </div>
-                </div>
-                <!-- Misdiagnosis Chart -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-semibold mb-4 text-orange-800">Common Misdiagnoses for Women</h3>
-                    <p class="text-gray-700 mb-6">Symptoms of complex conditions like Autism and Bipolar Disorder in women are frequently attributed to more "common" diagnoses, delaying appropriate treatment.</p>
-                    <div class="chart-container">
-                        <canvas id="misdiagnosisChart"></canvas>
-                    </div>
-                </div>
+        <!-- Symptom Dismissal and Medical Gaslighting Section -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">Symptom Dismissal and Diagnostic Invalidation</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    The phenomenon of "medical gaslighting" is a key driver of symptom dismissal. It occurs when a patient's symptoms are denied, dismissed, or disregarded by a healthcare professional. Women are often told their symptoms are "all in their head," "just stress," or attributed to emotional or psychological issues. This has deep historical roots, stemming from the archaic diagnosis of "female hysteria." A study found that experiencing medical gaslighting can lead to women suppressing emotions in clinical settings out of fear of being stigmatized. This cycle of invalidation can cause patients to distrust and even avoid health services, further delaying proper care.
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contributing Factors List -->
-    <section class="mb-16">
-        <div class="card p-8">
-            <h2 class="text-3xl font-bold mb-4 text-orange-700">Factors Contributing to Diagnostic Gaps</h2>
-            <p class="text-lg text-gray-700 mb-6">The path to misdiagnosis is paved with systemic biases and a historical lack of research focused on women's health. Key factors include:</p>
-            <ul class="list-disc list-inside space-y-2 text-gray-600 font-medium">
-                <li><span class="font-bold text-gray-800">Gender-Biased Criteria:</span> Diagnostic criteria for many conditions were based on studies conducted primarily on men, failing to capture female symptom presentation.</li>
-                <li><span class="font-bold text-gray-800">Symptom Internalization:</span> Women are more likely to internalize symptoms (e.g., inattentiveness, anxiety), which are less disruptive and noticeable than externalized symptoms (e.g., hyperactivity).</li>
-                <li><span class="font-bold text-gray-800">Societal Expectations:</span> Women are often socialized to be compliant and to mask their difficulties, a phenomenon known as "camouflaging," which can hide underlying distress.</li>
-                <li><span class="font-bold text-gray-800">Dismissal by Clinicians:</span> Clinicians may attribute a woman's symptoms to stress or hormones rather than exploring an underlying disorder.</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- The Patient's Journey -->
-    <section class="mb-16">
-        <div class="card">
-          <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-orange-700">The Patient's Journey: A Path of Dismissal</h2>
-          <p class="text-center mb-8 max-w-3xl mx-auto text-gray-700">This simplified flowchart illustrates the common, frustrating cycle many women experience when seeking mental healthcare, often leading to years of ineffective treatment before an accurate diagnosis is reached.</p>
-          <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+        <!-- Diagnostic Delays and Chronic Misdiagnoses Section -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">The Path to Misdiagnosis</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Diagnostic delays are a well-documented issue. Women with conditions such as endometriosis and fibromyalgia often face a prolonged period between symptom onset and a correct diagnosis, sometimes spanning years. In many cases, physical symptoms are misattributed to mental health conditions. For example, over a third of endometriosis patients are misdiagnosed with mental health conditions, which delays the actual diagnosis by more than four years on average. Similarly, symptoms of heart disease in women, which can include fatigue, nausea, and abdominal discomfort, are frequently misinterpreted as anxiety or indigestion, leading to delayed and potentially fatal treatment.
+                </p>
+            </div>
+        </section>
+        <!-- The Patient's Journey -->
+        <section class="mb-16">
+            <div class="card">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-orange-700">The Patient's Journey: A Path of Dismissal</h2>
+            <p class="text-center mb-8 max-w-3xl mx-auto text-gray-700">This simplified flowchart illustrates the common, frustrating cycle many women experience when seeking mental healthcare, often leading to years of ineffective treatment before an accurate diagnosis is reached.</p>
             <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-                <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#d97706; background-color:#fff7ed;">
-                    <div class="text-2xl font-bold mb-2 text-orange-800">1</div>
-                    <h3 class="font-bold text-gray-800">Initial Symptoms</h3>
-                    <p class="text-sm text-gray-700">Patient experiences persistent distress (e.g., anxiety, fatigue, focus issues).</p>
-                </div>
-                <div class="text-4xl text-orange-700 font-normal">&RightArrow;</div>
-                <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#d97706; background-color:#fff7ed;">
-                    <div class="text-2xl font-bold mb-2 text-orange-800">2</div>
-                    <h3 class="font-bold text-gray-800">Seeks Help</h3>
-                    <p class="text-sm text-gray-700">Symptoms are described to a primary care physician or therapist.</p>
-                </div>
-                <div class="text-4xl text-orange-700 font-normal">&RightArrow;</div>
-                <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#f59e0b; background-color:white;">
-                    <div class="text-2xl font-bold mb-2 text-orange-800">3</div>
-                    <h3 class="font-bold text-orange-700">Symptom Dismissal / Misdiagnosis</h3>
-                    <p class="text-sm text-gray-700">Attributed to "stress" or "hormones," leading to an initial, incorrect diagnosis.</p>
-                </div>
-                <div class="text-4xl text-orange-700 font-normal">&LeftRightArrow;</div>
-                <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#f59e0b; background-color:white;">
-                    <div class="text-2xl font-bold mb-2 text-orange-800">4</div>
-                    <h3 class="font-bold text-orange-700">Ineffective Treatment</h3>
-                    <p class="text-sm text-gray-700">Prescribed treatment for the wrong condition fails. Patient self-doubts and the cycle repeats.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#d97706; background-color:#fff7ed;">
+                        <div class="text-2xl font-bold mb-2 text-orange-800">1</div>
+                        <h3 class="font-bold text-gray-800">Initial Symptoms</h3>
+                        <p class="text-sm text-gray-700">Patient experiences persistent distress (e.g., anxiety, fatigue, focus issues).</p>
+                    </div>
+                    <div class="text-4xl text-orange-700 font-normal">&RightArrow;</div>
+                    <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#d97706; background-color:#fff7ed;">
+                        <div class="text-2xl font-bold mb-2 text-orange-800">2</div>
+                        <h3 class="font-bold text-gray-800">Seeks Help</h3>
+                        <p class="text-sm text-gray-700">Symptoms are described to a primary care physician or therapist.</p>
+                    </div>
+                    <div class="text-4xl text-orange-700 font-normal">&RightArrow;</div>
+                    <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#f59e0b; background-color:white;">
+                        <div class="text-2xl font-bold mb-2 text-orange-800">3</div>
+                        <h3 class="font-bold text-orange-700">Symptom Dismissal / Misdiagnosis</h3>
+                        <p class="text-sm text-gray-700">Attributed to "stress" or "hormones," leading to an initial, incorrect diagnosis.</p>
+                    </div>
+                    <div class="text-4xl text-orange-700 font-normal">&LeftRightArrow;</div>
+                    <div class="text-center p-4 border-2 rounded-lg w-full md:w-1/4" style="border-color:#f59e0b; background-color:white;">
+                        <div class="text-2xl font-bold mb-2 text-orange-800">4</div>
+                        <h3 class="font-bold text-orange-700">Ineffective Treatment</h3>
+                        <p class="text-sm text-gray-700">Prescribed treatment for the wrong condition fails. Patient self-doubts and the cycle repeats.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="mb-16">
-        <div class="card p-8 text-center">
-            <div class="mt-6 text-center">
-                <a href="index.html" class="btn-primary">Go back to the main page</a>
+        <!-- Underdiagnosed and Misdiagnosed Mental Health Conditions -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">Common Misdiagnoses in Mental Health</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Mental health conditions themselves are subject to chronic misdiagnosis in women. Attention-Deficit/Hyperactivity Disorder (ADHD) is a prime example. The diagnostic criteria and assessment tools have historically been based on male presentations, which often involve hyperactivity. In contrast, many women with ADHD present with more inattentive symptoms, which are easily overlooked or misdiagnosed as anxiety, depression, or even a personality disorder. This overemphasis on comorbidities can blind clinicians to the underlying ADHD, perpetuating a cycle of ineffective treatment. Additionally, conditions like thyroid disorders, which are more common in women, are often misinterpreted as "stress and being over-tired" or a symptom of depression.
+                </p>
             </div>
-        </div>
-    </section>
-    <!-- Footer Section -->
+        </section>
+
+        <!-- Conclusion Section -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">The Path Forward</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Addressing these issues requires a multi-faceted approach. It calls for greater gender diversity in clinical research and trials, as well as an overhaul of diagnostic criteria to account for sex-specific symptom presentations. Healthcare professionals need to be educated on implicit biases and the importance of patient-centered communication. By validating women's experiences and treating their symptoms with the seriousness they deserve, the medical community can begin to rebuild trust and improve health outcomes for women globally.
+                </p>
+            </div>
+        </section>
+
+        <!-- References Section -->
+        <section>
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8 text-orange-700">References</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li>Gregory, K., Pritlove, C., Upshur, R., & Kontos, P. (2025). A Case for a Critical Examination of Diagnostic Delays Among Women. <i>ResearchGate</i>.</li>
+                    <li>Higgs LLP. (2024). Misdiagnosis: The Overlooked Crisis In Women's Health. <i>Higgs LLP</i>.</li>
+                    <li>Rabbitt, M. (2020). Inside the epidemic of misdiagnosed women. <i>PSNet</i>.</li>
+                    <li>Smithsonian Magazine. (2025). For Some Women With Serious Physical Ailments, Mental Illness Has Become a Scapegoat Diagnosis. <i>Smithsonian Magazine</i>.</li>
+                    <li>Soliant Health. (2024). Survey: Women More Likely to Receive Misdiagnoses and Unsatisfactory or Poor-Quality Care. <i>Pharmacy Times</i>.</li>
+                    <li>University of Colorado School of Medicine. (2019). Gender Differences in Manifestation of Diseases Lead to Poorer Diagnosis and Treatment in Women. <i>CU Anschutz</i>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="card p-8 text-center">
+                <div class="mt-6 text-center">
+                    <a href="index.html" class="btn-primary">Go back to the main page</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
     <footer class="text-center text-gray-400 text-sm mt-12">
-        <p class="font-bold" style="color: #0B0A07;">Advocacy and education are key to closing the gender gap in mental healthcare.</p>
-        <p>This infographic synthesizes data from various public health reports and research studies on gender disparities in mental health. Data is illustrative and represents averaged findings. Created September 2025.</p>
-        </footer>
+        <p>Advocacy and education are key to closing the gender gap in mental healthcare.</p>
+        <p>&copy; 2025 HARMONI. All rights reserved</p>
+    </footer>
 
 </div>
 
-<script>
-    const wrapLabels = (label, maxLength = 16) => {
-        if (label.length <= maxLength) return label;
-        const words = label.split(' ');
-        let lines = [];
-        let currentLine = '';
-        for (const word of words) {
-            if ((currentLine + ' ' + word).trim().length > maxLength) {
-                lines.push(currentLine.trim());
-                currentLine = word;
-            } else {
-                currentLine = (currentLine + ' ' + word).trim();
-            }
-        }
-        if (currentLine) lines.push(currentLine.trim());
-        return lines;
-    };
-
-    const tooltipTitleCallback = (tooltipItems) => {
-        const item = tooltipItems[0];
-        let label = item.chart.data.labels[item.dataIndex];
-        return Array.isArray(label) ? label.join(' ') : label;
-    };
-
-    const adhdDiagnosisAgeCtx = document.getElementById('adhdDiagnosisAge').getContext('2d');
-    new Chart(adhdDiagnosisAgeCtx, {
-        type: 'bar',
-        data: {
-            labels: ['7-12 years', '13-18 years', '19-29 years', '30-45 years', '46+ years'],
-            datasets: [{
-                label: 'Age of ADHD Diagnosis (Men)',
-                data: [45, 25, 15, 10, 5],
-                backgroundColor: '#1e40af', /* Blue for contrast */
-                borderColor: '#1e40af',
-                borderWidth: 1
-            }, {
-                label: 'Age of ADHD Diagnosis (Women)',
-                data: [15, 18, 28, 30, 9],
-                backgroundColor: '#d90606', /* Red */
-                borderColor: '#d90606',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Percentage of Diagnoses', color: '#433d32' },
-                    ticks: { color: '#433d32' },
-                    grid: { color: 'rgba(217, 119, 6, 0.2)' }
-                },
-                x: {
-                    title: { display: true, text: 'Age Group', color: '#433d32' },
-                    ticks: { color: '#433d32' },
-                    grid: { color: 'rgba(217, 119, 6, 0.2)' }
-                }
-            },
-            plugins: {
-                legend: { position: 'top', labels: { color: '#433d32' } },
-                tooltip: { callbacks: { title: tooltipTitleCallback } }
-            }
-        }
-    });
-
-    const misdiagnosisChartCtx = document.getElementById('misdiagnosisChart').getContext('2d');
-    const misdiagnosisLabels = [
-        'Autism Spectrum Disorder presenting as Anxiety/OCD',
-        'Bipolar Disorder presenting as Major Depression',
-        'ADHD (Inattentive) presenting as Depression',
-        'Borderline Personality Disorder presenting as Bipolar'
-    ].map(label => wrapLabels(label));
-    new Chart(misdiagnosisChartCtx, {
-        type: 'doughnut',
-        data: {
-            labels: misdiagnosisLabels,
-            datasets: [{
-                label: 'Frequency of Misdiagnosis',
-                data: [40, 30, 20, 10],
-                backgroundColor: ['#1e40af', '#3b82f6', '#d97706', '#f59e0b'],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { 
-                    position: 'bottom',
-                    labels: {
-                        color: '#433d32',
-                        generateLabels: function(chart) {
-                            const data = chart.data;
-                            if (data.labels.length && data.datasets.length) {
-                                return data.labels.map(function(label, i) {
-                                    const meta = chart.getDatasetMeta(0);
-                                    const style = meta.controller.getStyle(i);
-                                    return {
-                                        text: Array.isArray(label) ? label.join(' ') : label,
-                                        fillStyle: style.backgroundColor,
-                                        strokeStyle: style.borderColor,
-                                        lineWidth: style.borderWidth,
-                                        hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
-                                        index: i
-                                    };
-                                });
-                            }
-                            return [];
-                        }
-                    }
-                },
-                tooltip: { callbacks: { title: tooltipTitleCallback } }
-            }
-        }
-    });
-</script>
 </body>
 </html>
