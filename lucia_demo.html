@@ -49,22 +49,21 @@
             transform: translateY(0);
         }
         .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #f97316;
-            font-weight: bold;
+            position: relative;
+            color: white; /* keep button text color consistent */
+            font-weight: 500;
         }
         .loading::after {
             content: '';
             display: inline-block;
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
             margin-left: 0.5rem;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: #f97316;
+            border-top-color: white;
             animation: spin 1s ease-in-out infinite;
+            vertical-align: middle;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
